@@ -9,26 +9,27 @@
   --border-glow: rgba(255, 0, 127, 0.4);
 }
 
-body {
-  background: radial-gradient(circle at top, #0b000f 0%, #030006 100%);
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
   font-family: "Poppins", Arial, Helvetica, sans-serif;
+  background: radial-gradient(circle at top, #0b000f 0%, #030006 100%);
   color: var(--white);
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  overflow: hidden;
-  margin: 0;
 }
 
 .box-questions {
   background: linear-gradient(145deg, var(--gray), var(--gray2));
-  color: var(--white);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 90vh;
-  width: 90%;
+  width: 95%;
+  height: 100%;
+  max-height: 100%;
   border-radius: 14px;
   box-shadow: 0 0 20px var(--border-glow);
   text-align: center;
@@ -47,6 +48,7 @@ body {
   padding: 0.8rem;
   box-shadow: 0 0 15px var(--pink-neon);
   text-shadow: 0 0 6px var(--pink-neon);
+  flex-shrink: 0;
 }
 
 #history {
@@ -57,17 +59,22 @@ body {
   flex-direction: column;
   gap: 0.8rem;
   scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* smooth scroll no iOS */
 }
 
 .footer {
   background: linear-gradient(90deg, var(--wine), var(--pink-neon));
   border-radius: 0 0 14px 14px;
-  padding: 0.8rem;
+  padding: 0.6rem 0.8rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   box-shadow: 0 0 15px var(--pink-neon);
+  flex-shrink: 0;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
 }
 
 input {
@@ -144,24 +151,26 @@ button:hover {
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Responsividade extra */
 @media (max-width: 480px) {
+  .box-questions {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+
   .header {
     font-size: 1rem;
+    padding: 0.6rem;
   }
 
   input {
     font-size: 0.85rem;
+    padding: 8px;
   }
 
   button {
@@ -173,4 +182,18 @@ button:hover {
   .response-message {
     font-size: 0.85rem;
   }
+
+  .footer {
+    padding: 0.5rem 0.6rem;
+    gap: 4px;
+  }
+
+  #history {
+    max-height: calc(100vh - 120px); /* altura ajustável conforme header + footer */
+  }
+}
+
+/* Remove barra de rolagem visual */
+body::-webkit-scrollbar {
+  display: none;
 }
